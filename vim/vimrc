@@ -1,0 +1,96 @@
+set nocompatible
+filetype off
+set rtp+=$HOME/.vim/bundle/vundle/
+call vundle#rc()
+
+Bundle 'Align'
+Bundle 'Color-Sampler-Pack'
+Bundle 'CSApprox'
+Bundle 'DirDiff.vim'
+Bundle 'ervandew/supertab'
+Bundle 'fugitive.vim'
+Bundle 'gmarik/vundle'
+Bundle 'jQuery'
+Bundle 'matchit.zip'
+Bundle 'pangloss/vim-javascript'
+Bundle 'ruby-matchit'
+Bundle 'ScrollColors'
+Bundle 'surround.vim'
+Bundle 'Tabular'
+Bundle 'textobj-rubyblock'
+Bundle 'textobj-user'
+Bundle 'tpope/vim-rails.git'
+Bundle 'vim-coffee-script'
+Bundle 'DrawIt'
+Bundle 'Markdown'
+Bundle 'benmills/vimux'
+Bundle 'pgr0ss/vimux-ruby-test'
+
+filetype plugin indent on
+
+syntax enable
+colorscheme lucius
+
+"filetype on		    " fast
+"filetype off		    " fast
+"filetype plugin on	    " slow
+"filetype plugin off	    " fast
+"filetype indent on	    " fast
+"filetype indent off	    " fast
+"filetype plugin indent on  " slow
+"filetype plugin indent off " fast
+
+" 'filetype plugin on' is slow when on a jruby project, possibly b/c jruby
+" starts slow as shit.
+
+map QQ :q<CR>
+map WW :wall<CR>
+map NN :next<CR>
+map PP :previous<CR>
+map + <C-A>
+map - <C-X>
+cmap w!! w !sudo tee %
+command T tabedit README
+
+inoremap <C-F> <C-X><C-F>
+inoremap <C-L> <C-X><C-L>
+
+set autoindent
+set autoread
+set autowrite
+set backspace=indent,eol,start
+set confirm
+set expandtab
+set history=1000
+set hlsearch
+set ignorecase
+set incsearch
+set listchars=tab:>-,trail:_
+set nowrap
+set pastetoggle=<F5>
+set ruler
+set scrolloff=7
+set shiftwidth=2
+set shortmess=atI
+set showcmd
+set showmatch
+set sidescroll=8
+set softtabstop=2
+set splitright
+set switchbuf=useopen
+set virtualedit=block
+
+cabbrev h vertical help
+iabbrev DD <C-r>=strftime("%c")<CR> 
+map DD I== <C-r>=strftime("%c")<CR> ==<CR>
+
+" The following gives you a quick "git blame" on the hightlighted code
+vmap gl :<C-U>!git blame <C-R>=expand("%:p") <CR> \| sed -n <C-R>=line("'<") <CR>,<C-R>=line("'>") <CR>p <CR>
+
+" `. - Goto last edit.
+
+let @r="require 'ruby-debug';debugger"
+" re-indent xml
+map <F3> :%s/>\s*</>\r</g<CR>:set ft=xml<CR>gg=G
+" re-indent json
+map <F4> :%s/{/{\r/g<CR>:%s/}/\r}/g<CR>:%s/,/,\r/g<CR>:set ft=javascript<CR>gg=G
