@@ -1,12 +1,22 @@
 autoload -Uz promptinit zmv
 PROMPT="%# "
-promptinit && prompt walters
+promptinit && prompt bart
 zstyle ':completion::complete:*' use-cache 1
 
 #export TERM=${TERM:/xterm/xterm-256color} #Workaround Terminal/vte bug/argument.
 
-find ~/.ssh -type f -name "id_*" -not -name "*.pub" -exec keychain -q {} \;
-source ~/.keychain/$(hostname)-sh
+function running_osx() {
+  uname -a | grep -qi darwin 
+}
+
+function running_linux() {
+  uname -a | grep -qi linux
+}
+
+if running_linux; then
+  find ~/.ssh -type f -name "id_*" -not -name "*.pub" -exec keychain -q {} \;
+  source ~/.keychain/$(hostname)-sh
+fi
 
 bindkey -v
 bindkey ' ' magic-space
@@ -86,13 +96,19 @@ HISTSIZE=100000
 HISTFILE="${HOME}/.zsh_history"
 READNULLCMD=less
 REPORTTIME=7
-typeset -U PATH="$PATH:${HOME}/local/bin:${HOME}/local/sbin:${HOME}/.local/bin:/sbin:/usr/sbin"
+typeset -U PATH="${HOME}/local/bin:${HOME}/local/sbin:${HOME}/.local/bin:/sbin:/usr/local/bin:$PATH"
 
 export LESS="-RXei"
 export EDITOR="vim"
-export PERL5LIB="${HOME}/local/lib/perl5"
 
-alias	ls="ls -hF --color"
+
+if running_osx; then
+  alias	ls="ls -hFG"
+  alias vim='/usr/local/Cellar/macvim/7.3-64/MacVim.app/Contents/MacOS/Vim'
+elif running_linux; then
+  alias ls="ls -hF --color"
+fi
+
 alias les="less"
 alias	ll="ls -thor"
 alias l1="ls -1"
@@ -148,11 +164,6 @@ didi ()
 {
    (history 1 | grep -v "didi" | grep "$*") || (grep "$*" $HISTFILE | grep -v didi)
 }
-
-first()  { awk '{print $1}'  }
-second() { awk '{print $2}'  }
-third()  { awk '{print $3}'  }
-last()   { awk '{print $NF}' }
 
 order ()
 {
