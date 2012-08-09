@@ -157,7 +157,7 @@ tvd ()
 
 tn ()
 {
-  tmux -2 new -s $(basename $(pwd))
+  tmux detach-client; tmux -2 new -s $(basename $(pwd))
 }
 
 didi ()
