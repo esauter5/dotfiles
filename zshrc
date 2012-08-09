@@ -103,6 +103,7 @@ export EDITOR="vim"
 
 
 if running_osx; then
+  export LSCOLORS=ExfxcxdxbxExExabagacad
   alias	ls="ls -hFG"
   alias vim='/usr/local/Cellar/macvim/7.3-64/MacVim.app/Contents/MacOS/Vim'
 elif running_linux; then
