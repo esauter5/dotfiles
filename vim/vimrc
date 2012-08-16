@@ -25,6 +25,7 @@ Bundle 'DrawIt'
 Bundle 'Markdown'
 Bundle 'benmills/vimux'
 Bundle 'pgr0ss/vimux-ruby-test'
+Bundle 'cloud8421/vimux-cucumber'
 
 filetype plugin indent on
 
@@ -79,6 +80,8 @@ set softtabstop=2
 set splitright
 set switchbuf=useopen
 set virtualedit=block
+set number
+set list
 
 cabbrev h vertical help
 iabbrev DD <C-r>=strftime("%c")<CR> 
@@ -88,6 +91,53 @@ map DD I== <C-r>=strftime("%c")<CR> ==<CR>
 vmap gl :<C-U>!git blame <C-R>=expand("%:p") <CR> \| sed -n <C-R>=line("'<") <CR>,<C-R>=line("'>") <CR>p <CR>
 
 " `. - Goto last edit.
+
+autocmd User Rails Rnavcommand uploader app/uploaders -suffix=_uploader.rb -default=model()
+autocmd User Rails Rnavcommand steps features/step_definitions -suffix=_steps.rb -default=web
+autocmd User Rails Rnavcommand blueprint spec/blueprints -suffix=_blueprint.rb -default=model()
+autocmd User Rails Rnavcommand factory spec/factories -suffix=_factory.rb -default=model()
+autocmd User Rails Rnavcommand fabricator spec/fabricators -suffix=_fabricator.rb -default=model()
+autocmd User Rails Rnavcommand feature features -suffix=.feature -default=cucumber
+autocmd User Rails Rnavcommand support spec/support features/support -default=env
+autocmd User Rails Rnavcommand report app/reports
+autocmd User Rails Rnavcommand import app/importers
+autocmd User Rails Rnavcommand export app/exporters
+
+let mapleader = ','
+if exists('$TMUX')
+  let g:VimuxOrientation = "h"
+  let g:VimuxHeight = "33"
+  let VimuxUseNearestPane = 1
+  map <Leader>r :RunLastVimTmuxCommand<CR>
+
+  function SaveAndRunRubyFocusedTest()
+    exec "wall"
+    exec "RunRubyFocusedTest"
+  endfunction
+
+  function SaveAndRunAllRubyTests()
+    exec "wall"
+    exec "RunAllRubyTests"
+  endfunction
+
+  function SaveAndRunFocusedCuke()
+    exec "wall"
+    exec "RunFocusedCuke"
+  endfunction
+
+  function SaveAndRunAllCukes()
+    exec "wall"
+    exec "RunAllCukes"
+  endfunction
+
+  autocmd FileType ruby map <buffer> <Leader>t :call SaveAndRunRubyFocusedTest()<CR>
+  autocmd FileType ruby map <buffer> <Leader>T :call SaveAndRunAllRubyTests()<CR>
+  autocmd FileType cucumber map <buffer> <Leader>t :call SaveAndRunFocusedCuke()<CR>
+  autocmd FileType cucumber map <buffer> <Leader>T :call SaveAndRunAllCukes()<CR>
+endif
+
+map <Leader><Space> :nohlsearch<CR>
+map <Leader>, :%s/^\s\+$//<CR>
 
 let @r="require 'ruby-debug';debugger"
 " re-indent xml

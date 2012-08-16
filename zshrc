@@ -1,6 +1,6 @@
 autoload -Uz promptinit zmv
 PROMPT="%# "
-promptinit && prompt bart
+promptinit && prompt bart red cyan green yellow
 zstyle ':completion::complete:*' use-cache 1
 
 #export TERM=${TERM:/xterm/xterm-256color} #Workaround Terminal/vte bug/argument.
@@ -122,7 +122,9 @@ alias p="pushd"
 alias pp="cd ~2"
 alias ri="ri -f ansi"
 alias h="history"
-alias open="xdg-open"
+if running_linux; then
+  alias open="xdg-open"
+fi
 alias e='exec'
 alias gst='git status'
 alias ta='tmux -2 attach || tn'
@@ -130,6 +132,7 @@ alias be="bundle exec"
 alias bi="bundle install"
 alias gg='git goggles'
 alias ssh='TERM=${TERM/screen/xterm} ssh'
+alias tvv="tv /usr/local/Cellar/macvim/7.3-64/MacVim.app/Contents/MacOS/Vim"
 
 t ()
 {
@@ -201,9 +204,6 @@ function unix2dos()
   sed -e 's,\r*$,\r,'
 }
 
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
-
 # The following lines were added by compinstall
 
 zstyle ':completion:*' completer _expand _complete _ignored
@@ -217,6 +217,8 @@ zstyle ':completion:*' squeeze-slashes true
 zstyle ':completion:*' substitute '1 '
 zstyle ':completion:*' verbose true
 zstyle :compinstall filename '/home/paul/.zshrc'
+fpath=(/usr/local/share/zsh-completions $fpath)
+
 
 autoload -Uz compinit
 compinit
