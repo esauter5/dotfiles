@@ -23,9 +23,8 @@ Bundle 'tpope/vim-rails.git'
 Bundle 'vim-coffee-script'
 Bundle 'DrawIt'
 Bundle 'Markdown'
-Bundle 'benmills/vimux'
-Bundle 'pgr0ss/vimux-ruby-test'
-Bundle 'cloud8421/vimux-cucumber'
+Bundle 'jgdavey/vim-turbux'
+Bundle 'jgdavey/tslime.vim'
 
 filetype plugin indent on
 
@@ -104,40 +103,11 @@ autocmd User Rails Rnavcommand import app/importers
 autocmd User Rails Rnavcommand export app/exporters
 
 let mapleader = ','
-if exists('$TMUX')
-  let g:VimuxOrientation = "h"
-  let g:VimuxHeight = "33"
-  let VimuxUseNearestPane = 1
-  map <Leader>r :RunLastVimTmuxCommand<CR>
-
-  function SaveAndRunRubyFocusedTest()
-    exec "wall"
-    exec "RunRubyFocusedTest"
-  endfunction
-
-  function SaveAndRunAllRubyTests()
-    exec "wall"
-    exec "RunAllRubyTests"
-  endfunction
-
-  function SaveAndRunFocusedCuke()
-    exec "wall"
-    exec "RunFocusedCuke"
-  endfunction
-
-  function SaveAndRunAllCukes()
-    exec "wall"
-    exec "RunAllCukes"
-  endfunction
-
-  autocmd FileType ruby map <buffer> <Leader>t :call SaveAndRunRubyFocusedTest()<CR>
-  autocmd FileType ruby map <buffer> <Leader>T :call SaveAndRunAllRubyTests()<CR>
-  autocmd FileType cucumber map <buffer> <Leader>t :call SaveAndRunFocusedCuke()<CR>
-  autocmd FileType cucumber map <buffer> <Leader>T :call SaveAndRunAllCukes()<CR>
-endif
 
 map <Leader><Space> :nohlsearch<CR>
 map <Leader>, :%s/^\s\+$//<CR>
+
+let g:turbux_command_prefix = 'bundle exec'
 
 let @r="require 'ruby-debug';debugger"
 " re-indent xml
