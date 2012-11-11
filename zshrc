@@ -14,8 +14,12 @@ function running_linux() {
 }
 
 if running_linux; then
-  find ~/.ssh -type f -name "id_*" -not -name "*.pub" -exec keychain -q {} \;
-  source ~/.keychain/$(hostname)-sh
+  eval `keychain --eval --quiet --quick --agents ssh`
+  function add_all_ssh_keys()
+  {
+    ssh-add $(grep -lR PRIVATE ~/.ssh)
+  }
+  alias ssh="(ssh-add -l > /dev/null || add_all_ssh_keys ) && ssh"
 fi
 
 bindkey -v
@@ -131,7 +135,6 @@ alias ta='tmux -2 attach || tn'
 alias be="bundle exec"
 alias bi="bundle install"
 alias gg='git goggles'
-alias ssh='TERM=${TERM/screen/xterm} ssh'
 alias tvv="tv /usr/local/Cellar/macvim/7.3-64/MacVim.app/Contents/MacOS/Vim"
 
 t ()
