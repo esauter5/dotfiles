@@ -107,13 +107,17 @@ REPORTTIME=7
 typeset -U PATH="${HOME}/local/bin:${HOME}/local/sbin:${HOME}/.local/bin:/sbin:/usr/local/bin:$PATH"
 
 export LESS="-RXei"
-export EDITOR="vim"
+if running_linux; then
+  export EDITOR="vim"
+elif running_osx; then
+  export EDITOR=/usr/local/Cellar/macvim/7.3-65/MacVim.app/Contents/MacOS/Vim
+fi
 
 
 if running_osx; then
   export LSCOLORS=ExfxcxdxbxExExabagacad
   alias	ls="ls -hFG"
-  alias vim='/usr/local/Cellar/macvim/7.3-64/MacVim.app/Contents/MacOS/Vim'
+  alias vim='/usr/local/Cellar/macvim/7.3-65/MacVim.app/Contents/MacOS/Vim'
 elif running_linux; then
   alias ls="ls -hF --color"
 fi
@@ -142,8 +146,6 @@ alias bil="bi --local"
 alias bu="b update"
 alias be="b exec"
 alias binit="bi && b package && echo 'vendor/ruby' >> .gitignore"
-# alias gg='git goggles'
-# alias tvv="tv /usr/local/Cellar/macvim/7.3-64/MacVim.app/Contents/MacOS/Vim"
 
 t ()
 {
@@ -247,3 +249,5 @@ function man () {
           man "$@"
 }
 
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"

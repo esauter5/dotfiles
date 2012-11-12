@@ -4,42 +4,40 @@ set rtp+=$HOME/.vim/bundle/vundle/
 call vundle#rc()
 
 Bundle 'Align'
-Bundle 'Color-Sampler-Pack'
 Bundle 'CSApprox'
+Bundle 'Color-Sampler-Pack'
 Bundle 'DirDiff.vim'
+Bundle 'DrawIt'
+Bundle 'Markdown'
+Bundle 'ScrollColors'
+Bundle 'Solarized'
+Bundle 'Tabular'
 Bundle 'ervandew/supertab'
 Bundle 'fugitive.vim'
 Bundle 'gmarik/vundle'
 Bundle 'jQuery'
+Bundle 'jgdavey/tslime.vim'
+Bundle 'jgdavey/vim-turbux'
 Bundle 'matchit.zip'
+Bundle 'nono/vim-handlebars'
 Bundle 'pangloss/vim-javascript'
 Bundle 'ruby-matchit'
-Bundle 'ScrollColors'
+Bundle 'scrooloose/nerdcommenter'
 Bundle 'surround.vim'
-Bundle 'Tabular'
 Bundle 'textobj-rubyblock'
 Bundle 'textobj-user'
-Bundle 'tpope/vim-rails.git'
-Bundle 'tpope/vim-eunuch.git'
-Bundle 'vim-coffee-script'
-Bundle 'DrawIt'
-Bundle 'Markdown'
-Bundle 'jgdavey/vim-turbux'
-Bundle 'jgdavey/tslime.vim'
-Bundle 'tpope/vim-endwise'
-Bundle 'tpope/vim-speeddating'
 Bundle 'tpope/vim-commentary'
-Bundle 'tpope/vim-haml'
-Bundle 'Solarized'
-Bundle 'scrooloose/nerdcommenter'
-Bundle 'nono/vim-handlebars'
 Bundle 'tpope/vim-dispatch'
+Bundle 'tpope/vim-endwise'
+Bundle 'tpope/vim-eunuch.git'
+Bundle 'tpope/vim-haml'
+Bundle 'tpope/vim-rails.git'
+Bundle 'tpope/vim-speeddating'
+Bundle 'vim-coffee-script'
 
 filetype plugin indent on
 
 syntax enable
-let g:solarized_termtrans=1
-colorscheme solarized
 
 "filetype on		    " fast
 "filetype off		    " fast
@@ -92,6 +90,8 @@ set virtualedit=block
 set number
 set list
 
+set backupskip=/tmp/*,/private/tmp/*
+
 cabbrev h vertical help
 iabbrev DD <C-r>=strftime("%c")<CR> 
 map DD I== <C-r>=strftime("%c")<CR> ==<CR>
@@ -129,3 +129,5 @@ let @r="require 'ruby-debug';debugger"
 map <F3> :%s/>\s*</>\r</g<CR>:set ft=xml<CR>gg=G
 " re-indent json
 map <F4> :%s/{/{\r/g<CR>:%s/}/\r}/g<CR>:%s/,/,\r/g<CR>:set ft=javascript<CR>gg=G
+
+vmap <Leader>t <Plug>SendSelectionToTmux
