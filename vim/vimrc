@@ -26,13 +26,18 @@ Bundle 'DrawIt'
 Bundle 'Markdown'
 Bundle 'jgdavey/vim-turbux'
 Bundle 'jgdavey/tslime.vim'
+Bundle 'tpope/vim-endwise'
+Bundle 'tpope/vim-speeddating'
+Bundle 'tpope/vim-commentary'
+Bundle 'tpope/vim-haml'
 Bundle 'Solarized'
 Bundle 'scrooloose/nerdcommenter'
+Bundle 'nono/vim-handlebars'
+Bundle 'tpope/vim-dispatch'
 
 filetype plugin indent on
 
 syntax enable
-set background=dark
 let g:solarized_termtrans=1
 colorscheme solarized
 
@@ -90,6 +95,8 @@ set list
 cabbrev h vertical help
 iabbrev DD <C-r>=strftime("%c")<CR> 
 map DD I== <C-r>=strftime("%c")<CR> ==<CR>
+cnoremap %% <C-r>=expand('%:h').'/'<CR>
+map <Leader>e :edit %%
 
 " The following gives you a quick "git blame" on the hightlighted code
 vmap gl :<C-U>!git blame <C-R>=expand("%:p") <CR> \| sed -n <C-R>=line("'<") <CR>,<C-R>=line("'>") <CR>p <CR>
@@ -107,6 +114,8 @@ autocmd User Rails Rnavcommand support spec/support features/support -default=en
 autocmd User Rails Rnavcommand report app/reports
 autocmd User Rails Rnavcommand import app/importers
 autocmd User Rails Rnavcommand export app/exporters
+
+autocmd BufEnter *.hbs.* setlocal ft=handlebars
 
 let mapleader = ','
 

@@ -18,8 +18,12 @@ if running_linux; then
   function add_all_ssh_keys()
   {
     ssh-add $(grep -lR PRIVATE ~/.ssh)
-  }
-  alias ssh="(ssh-add -l > /dev/null || add_all_ssh_keys ) && ssh"
+    if [ -n "${TMUX+x}" ]; then
+      tmux set-environment SSH_AGENT_PID $SSH_AGENT_PID
+      tmux set-environment SSH_AUTH_SOCK $SSH_AUTH_SOCK
+    fi
+}
+alias ssh="(ssh-add -l > /dev/null || add_all_ssh_keys ) && ssh"
 fi
 
 bindkey -v
@@ -132,10 +136,14 @@ fi
 alias e='exec'
 alias gst='git status'
 alias ta='tmux -2 attach || tn'
-alias be="bundle exec"
-alias bi="bundle install"
-alias gg='git goggles'
-alias tvv="tv /usr/local/Cellar/macvim/7.3-64/MacVim.app/Contents/MacOS/Vim"
+alias b="bundle"
+alias bi="b install --path vendor"
+alias bil="bi --local"
+alias bu="b update"
+alias be="b exec"
+alias binit="bi && b package && echo 'vendor/ruby' >> .gitignore"
+# alias gg='git goggles'
+# alias tvv="tv /usr/local/Cellar/macvim/7.3-64/MacVim.app/Contents/MacOS/Vim"
 
 t ()
 {
@@ -238,3 +246,4 @@ function man () {
           LESS_TERMCAP_us=$(printf "\e[1;32m")\
           man "$@"
 }
+
