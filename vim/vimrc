@@ -3,15 +3,21 @@ filetype off
 set rtp+=$HOME/.vim/bundle/vundle/
 call vundle#rc()
 
+" Bundle 'DrawIt'
+" Bundle 'jgdavey/tslime.vim'
+" Bundle 'jgdavey/vim-turbux'
 Bundle 'Align'
+Bundle 'AnsiEsc.vim'
 Bundle 'CSApprox'
 Bundle 'Color-Sampler-Pack'
+Bundle 'Colour-Sampler-Pack'
 Bundle 'DirDiff.vim'
 Bundle 'DrawIt'
 Bundle 'Markdown'
 Bundle 'ScrollColors'
 Bundle 'Solarized'
 Bundle 'Tabular'
+Bundle 'coderifous/textobj-word-column.vim'
 Bundle 'ervandew/supertab'
 Bundle 'fugitive.vim'
 Bundle 'gmarik/vundle'
@@ -24,6 +30,7 @@ Bundle 'pangloss/vim-javascript'
 Bundle 'ruby-matchit'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'surround.vim'
+Bundle 'tComment'
 Bundle 'textobj-rubyblock'
 Bundle 'textobj-user'
 Bundle 'tpope/vim-commentary'
@@ -38,6 +45,8 @@ Bundle 'vim-coffee-script'
 filetype plugin indent on
 
 syntax enable
+set background=dark
+colorscheme railscasts
 
 "filetype on		    " fast
 "filetype off		    " fast
@@ -53,6 +62,8 @@ syntax enable
 
 map QQ :q<CR>
 map WW :wall<CR>
+map <Leader>x :x\|:qa<cr>
+command Wa wall
 map NN :next<CR>
 map PP :previous<CR>
 map + <C-A>
@@ -73,6 +84,7 @@ set history=1000
 set hlsearch
 set ignorecase
 set incsearch
+set lazyredraw
 set listchars=tab:>-,trail:_
 set nowrap
 set pastetoggle=<F5>
@@ -93,36 +105,107 @@ set list
 set backupskip=/tmp/*,/private/tmp/*
 
 cabbrev h vertical help
-iabbrev DD <C-r>=strftime("%c")<CR> 
-map DD I== <C-r>=strftime("%c")<CR> ==<CR>
 cnoremap %% <C-r>=expand('%:h').'/'<CR>
 map <Leader>e :edit %%
+" iabbrev DD <C-r>=strftime("%c")<CR>
+" map DD I== <C-r>=strftime("%c")<CR> ==<CR>
 
 " The following gives you a quick "git blame" on the hightlighted code
 vmap gl :<C-U>!git blame <C-R>=expand("%:p") <CR> \| sed -n <C-R>=line("'<") <CR>,<C-R>=line("'>") <CR>p <CR>
 
 " `. - Goto last edit.
 
-autocmd User Rails Rnavcommand uploader app/uploaders -suffix=_uploader.rb -default=model()
-autocmd User Rails Rnavcommand steps features/step_definitions -suffix=_steps.rb -default=web
-autocmd User Rails Rnavcommand blueprint spec/blueprints -suffix=_blueprint.rb -default=model()
-autocmd User Rails Rnavcommand factory spec/factories -suffix=_factory.rb -default=model()
-autocmd User Rails Rnavcommand fabricator spec/fabricators -suffix=_fabricator.rb -default=model()
-autocmd User Rails Rnavcommand feature features -suffix=.feature -default=cucumber
-autocmd User Rails Rnavcommand acceptance acceptance -suffix=_spec.rb -default=model()
-autocmd User Rails Rnavcommand support spec/support features/support -default=env
-autocmd User Rails Rnavcommand report app/reports
-autocmd User Rails Rnavcommand import app/importers
-autocmd User Rails Rnavcommand export app/exporters
+let g:rails_projections = {
+      \  "acceptance/*_spec.rb": {
+      \    "command": "acceptance",
+      \    "affinity": "model"
+      \  },
+      \  "spec/support/*": {
+      \    "command": "support"
+      \  }
+      \}
 
 autocmd BufEnter *.hbs.* setlocal ft=handlebars
+autocmd FileType gitcommit setlocal spell spelllang=en spellfile=~/.vim/spell/en.utf-8.add
 
+" autocmd FileType qf cla
 let mapleader = ','
 
 map <Leader><Space> :nohlsearch<CR>
+map <Leader>. :Tabularize/
 map <Leader>, :%s/\s\+$//<CR>
+map <Leader>r :!touch tmp/restart.txt<CR><CR>
 
-let g:turbux_command_prefix = 'bundle exec'
+" let g:turbux_command_prefix = 'bundle exec'
+
+""" Rails Test Stuff
+" function! RunCurrentTest()
+"   let in_test_file = match(expand("%"), '\(.feature\|_spec.rb\|_test.rb\|_spec.js.coffee\)$') != -1
+"   if in_test_file
+"     call SetTestFile()
+" 
+"     if match(expand('%'), '\.feature$') != -1
+"       call SetTestRunner("!cucumber")
+"       exec g:bjo_test_runner g:bjo_test_file
+"     elseif match(expand('%'), '_spec\.rb$') != -1
+"       call SetTestRunner("!rspec")
+"       exec g:bjo_test_runner g:bjo_test_file
+"     elseif match(expand('%'), '_spec.js.coffee$') != -1
+"       call SetTestRunner("!bundle exec rake konacha:run")
+"       let g:bjo_test_file  = "SPEC="
+"       let g:bjo_test_file .= expand("%:h:t")
+"       let g:bjo_test_file .= '/'
+"       let g:bjo_test_file .= expand("%:t:r:r")
+"       exec g:bjo_test_runner g:bjo_test_file
+"     else
+"       call SetTestRunner("!ruby -Itest")
+"       exec g:bjo_test_runner g:bjo_test_file
+"     endif
+"   else
+"     exec g:bjo_test_runner g:bjo_test_file
+"   endif
+" endfunction
+" 
+" function! SetTestRunner(runner)
+"   let g:bjo_test_runner=a:runner
+" endfunction
+" 
+" function! RunCurrentLineInTest()
+"   let in_test_file = match(expand("%"), '\(.feature\|_spec.rb\|_test.rb\)$') != -1
+"   if in_test_file
+"     call SetTestFileWithLine()
+"   end
+" 
+"   exec "!rspec" g:bjo_test_file . ":" . g:bjo_test_file_line
+" endfunction
+" 
+" function! SetTestFile()
+"   let g:bjo_test_file=@%
+" endfunction
+" 
+" function! SetTestFileWithLine()
+"   let g:bjo_test_file=@%
+"   let g:bjo_test_file_line=line(".")
+" endfunction
+" 
+" function! CorrectTestRunner()
+"   if match(expand('%'), '\.feature$') != -1
+"     return "cucumber"
+"   elseif match(expand('%'), '_spec\.rb$') != -1
+"     return "rspec"
+"   else
+"     return "ruby"
+"   endif
+" endfunction
+" 
+" map <Leader>L :call RunCurrentLineInTest()<Enter>
+" map <Leader>l :call RunCurrentTest()<Enter>
+""" End Rails Test Stuff
+
+"
+map <F1> :Dispatch rspec %<CR>
+map <F2> :Dispatch rspec %:<C-R>=line('.')<CR><CR>
+"
 
 let @r="require 'ruby-debug';debugger"
 " re-indent xml

@@ -104,20 +104,14 @@ HISTSIZE=100000
 HISTFILE="${HOME}/.zsh_history"
 READNULLCMD=less
 REPORTTIME=7
-typeset -U PATH="${HOME}/local/bin:${HOME}/local/sbin:${HOME}/.local/bin:/sbin:/usr/local/bin:$PATH"
 
 export LESS="-RXei"
-if running_linux; then
-  export EDITOR="vim"
-elif running_osx; then
-  export EDITOR=/usr/local/Cellar/macvim/7.3-65/MacVim.app/Contents/MacOS/Vim
-fi
+export EDITOR="vim"
 
 
 if running_osx; then
   export LSCOLORS=ExfxcxdxbxExExabagacad
   alias	ls="ls -hFG"
-  alias vim='/usr/local/Cellar/macvim/7.3-65/MacVim.app/Contents/MacOS/Vim'
 elif running_linux; then
   alias ls="ls -hF --color"
 fi
@@ -152,24 +146,9 @@ t ()
   tmux new-window "$*"
 }
 
-ts ()
-{
-  tmux split-window "$*"
-}
-
 tv ()
 {
-  tmux split-window -h "$*"
-}
-
-tsd ()
-{
-  tmux split-window -d "$*"
-}
-
-tvd ()
-{
-  tmux split-window -h -d "$*"
+  tmux new-window "mvim -v"
 }
 
 tn ()
@@ -217,6 +196,13 @@ function unix2dos()
   sed -e 's,\r*$,\r,'
 }
 
+function run_parallel_integration_test()
+{
+  clear
+  sleep $[ RANDOM % 30 ] # To stagger starts a little bit
+  bundle exec rspec acceptance/*(on[ $[ 1 + $(echo $TMUX_PANE | tr -d '%') % $(ls -1 acceptance | wc -l) ] ])
+}
+
 # The following lines were added by compinstall
 
 zstyle ':completion:*' completer _expand _complete _ignored
@@ -248,6 +234,3 @@ function man () {
           LESS_TERMCAP_us=$(printf "\e[1;32m")\
           man "$@"
 }
-
-### Added by the Heroku Toolbelt
-export PATH="/usr/local/heroku/bin:$PATH"

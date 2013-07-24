@@ -11,10 +11,10 @@
   local           = yellow
   remote          = green
 [color "diff"]
-  meta            = yellow bold
+  meta            = cyan bold
   frag            = magenta bold
   old             = red bold
-  new             = green bold
+  new             = green
 [color "status"]
   added           = yellow
   changed         = green
@@ -27,16 +27,23 @@
   tool            = vimdiff
 [alias]
   lg              = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %C(magenta)%an%Creset %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+  bl              = log master..HEAD --reverse
+  blrev           = rev-list master..HEAD --reverse
+  prep            = rebase -i master
   co              = checkout
-  st              = status
+  st              = status -sb
   br              = branch
   ci              = commit
   ap              = add -p
   cp              = cherry-pick
 [push]
-  default         = current
+  default         = tracking
 [github]
   user            = PaulOstazeski
   token           = 9c35f01e0cef9780a17e5076c0c64861
 [init]
   templatedir     = ~/.git_template
+[pull]
+  rebase          = true
+[mergetool]
+	keepBackup = false
