@@ -101,8 +101,10 @@ set switchbuf=useopen
 set virtualedit=block
 set number
 set list
+set shell=$SHELL\ -l
 
 set backupskip=/tmp/*,/private/tmp/*
+
 
 cabbrev h vertical help
 cnoremap %% <C-r>=expand('%:h').'/'<CR>
