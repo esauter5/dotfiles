@@ -104,7 +104,7 @@ HISTSIZE=100000
 HISTFILE="${HOME}/.zsh_history"
 READNULLCMD=less
 REPORTTIME=7
-typeset -U PATH="${HOME}/local/bin:${HOME}/local/sbin:${HOME}/.local/bin:/sbin:/usr/local/bin:$PATH"
+typeset -U PATH="./bin:${HOME}/local/bin:${HOME}/local/sbin:${HOME}/.local/bin:/sbin:/usr/local/bin:$PATH"
 
 export LESS="-RXei"
 export EDITOR="vim"
@@ -117,6 +117,9 @@ if running_osx; then
 elif running_linux; then
   alias ls="ls -hF --color"
 fi
+
+source /usr/share/chruby/chruby.sh
+source /usr/share/chruby/auto.sh
 
 alias les="less"
 alias	ll="ls -thor"

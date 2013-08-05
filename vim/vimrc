@@ -4,7 +4,7 @@ set rtp+=$HOME/.vim/bundle/vundle/
 call vundle#rc()
 
 Bundle 'Align'
-Bundle 'Color-Sampler-Pack'
+Bundle 'Colour-Sampler-Pack'
 Bundle 'CSApprox'
 Bundle 'DirDiff.vim'
 Bundle 'ervandew/supertab'
@@ -38,8 +38,9 @@ Bundle 'tpope/vim-dispatch'
 filetype plugin indent on
 
 syntax enable
-let g:solarized_termtrans=1
-colorscheme solarized
+" let g:solarized_termtrans=1
+set bg=dark
+colorscheme peaksea
 
 "filetype on		    " fast
 "filetype off		    " fast
@@ -103,19 +104,33 @@ vmap gl :<C-U>!git blame <C-R>=expand("%:p") <CR> \| sed -n <C-R>=line("'<") <CR
 
 " `. - Goto last edit.
 
-autocmd User Rails Rnavcommand uploader app/uploaders -suffix=_uploader.rb -default=model()
-autocmd User Rails Rnavcommand steps features/step_definitions -suffix=_steps.rb -default=web
-autocmd User Rails Rnavcommand blueprint spec/blueprints -suffix=_blueprint.rb -default=model()
-autocmd User Rails Rnavcommand factory spec/factories -suffix=_factory.rb -default=model()
-autocmd User Rails Rnavcommand fabricator spec/fabricators -suffix=_fabricator.rb -default=model()
-autocmd User Rails Rnavcommand feature features -suffix=.feature -default=cucumber
-autocmd User Rails Rnavcommand acceptance acceptance -suffix=_spec.rb -default=model()
-autocmd User Rails Rnavcommand support spec/support features/support -default=env
-autocmd User Rails Rnavcommand report app/reports
-autocmd User Rails Rnavcommand import app/importers
-autocmd User Rails Rnavcommand export app/exporters
+" autocmd User Rails Rnavcommand uploader app/uploaders -suffix=_uploader.rb -default=model()
+" autocmd User Rails Rnavcommand steps spec/acceptance/step_definitions -suffix=_steps.rb -default=web
+" autocmd User Rails Rnavcommand blueprint spec/blueprints -suffix=_blueprint.rb -default=model()
+" autocmd User Rails Rnavcommand factory spec/factories -suffix=_factory.rb -default=model()
+" autocmd User Rails Rnavcommand fabricator spec/fabricators -suffix=_fabricator.rb -default=model()
+" autocmd User Rails Rnavcommand feature spec/acceptance -suffix=.feature -default=env
+" autocmd User Rails Rnavcommand acceptance acceptance -suffix=_spec.rb -default=model()
+" autocmd User Rails Rnavcommand support spec/support features/support -default=env
+" autocmd User Rails Rnavcommand report app/reports
+" autocmd User Rails Rnavcommand import app/importers
+" autocmd User Rails Rnavcommand export app/exporters
+let g:rails_projections = {
+      \ "spec/features/*.feature": {
+      \  "command": "feature",
+      \  "affinity": "model"
+      \ },
+      \ "spec/features/step_definitions/*_steps.rb": {
+      \  "command": "step"
+      \ },
+      \ "spec/factories/*.rb": {
+      \  "command": "factory",
+      \  "affinity": "model"
+      \ }
+      \}
 
 autocmd BufEnter *.hbs.* setlocal ft=handlebars
+autocmd BufWritePost Gemfile !bundle install
 
 let mapleader = ','
 
