@@ -104,7 +104,7 @@ HISTSIZE=100000
 HISTFILE="${HOME}/.zsh_history"
 READNULLCMD=less
 REPORTTIME=7
-typeset -U PATH="${HOME}/local/bin:${HOME}/local/sbin:${HOME}/.local/bin:/sbin:/usr/local/bin:$PATH"
+typeset -U PATH="./bin:${HOME}/local/bin:${HOME}/local/sbin:${HOME}/.local/bin:/sbin:/usr/local/bin:$PATH:/usr/local/share/npm/bin"
 
 export LESS="-RXei"
 export EDITOR="vim"
@@ -144,6 +144,7 @@ alias binit="bi && b package && echo 'vendor/ruby' >> .gitignore"
 
 source /usr/local/opt/chruby/share/chruby/chruby.sh
 source /usr/local/opt/chruby/share/chruby/auto.sh
+
 
 t ()
 {

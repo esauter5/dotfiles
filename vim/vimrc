@@ -205,14 +205,15 @@ map <Leader>r :!touch tmp/restart.txt<CR><CR>
 """ End Rails Test Stuff
 
 "
-map <F1> :Dispatch rspec %<CR>
-map <F2> :Dispatch rspec %:<C-R>=line('.')<CR><CR>
+map <F1> :Dispatch bundle exec rspec %<CR>
+map <F2> :Dispatch bundle exec rspec %:<C-R>=line('.')<CR><CR>
+map <F3> :Dispatch bundle exec rspec<CR>
 "
 
 let @r="require 'ruby-debug';debugger"
 " re-indent xml
-map <F3> :%s/>\s*</>\r</g<CR>:set ft=xml<CR>gg=G
+map <F4> :%s/>\s*</>\r</g<CR>:set ft=xml<CR>gg=G
 " re-indent json
-map <F4> :%s/{/{\r/g<CR>:%s/}/\r}/g<CR>:%s/,/,\r/g<CR>:set ft=javascript<CR>gg=G
+map <F5> :%s/{/{\r/g<CR>:%s/}/\r}/g<CR>:%s/,/,\r/g<CR>:set ft=javascript<CR>gg=G
 
 vmap <Leader>t <Plug>SendSelectionToTmux
