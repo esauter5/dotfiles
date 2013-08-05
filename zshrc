@@ -117,6 +117,9 @@ elif running_linux; then
   alias ls="ls -hF --color"
 fi
 
+source /usr/share/chruby/chruby.sh
+source /usr/share/chruby/auto.sh
+
 alias les="less"
 alias	ll="ls -thor"
 alias l1="ls -1"

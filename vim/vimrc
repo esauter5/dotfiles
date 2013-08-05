@@ -8,6 +8,7 @@ call vundle#rc()
 " Bundle 'jgdavey/vim-turbux'
 Bundle 'Align'
 Bundle 'AnsiEsc.vim'
+Bundle 'Colour-Sampler-Pack'
 Bundle 'CSApprox'
 Bundle 'Color-Sampler-Pack'
 Bundle 'Colour-Sampler-Pack'
@@ -45,8 +46,8 @@ Bundle 'vim-coffee-script'
 filetype plugin indent on
 
 syntax enable
-set background=dark
-colorscheme railscasts
+set bg=dark
+colorscheme peaksea
 
 "filetype on		    " fast
 "filetype off		    " fast
@@ -124,11 +125,23 @@ let g:rails_projections = {
       \  },
       \  "spec/support/*": {
       \    "command": "support"
-      \  }
+      \  },
+      \ "spec/features/*.feature": {
+      \  "command": "feature",
+      \  "affinity": "model"
+      \ },
+      \ "spec/features/step_definitions/*_steps.rb": {
+      \  "command": "step"
+      \ },
+      \ "spec/factories/*.rb": {
+      \  "command": "factory",
+      \  "affinity": "model"
+      \ }
       \}
 
 autocmd BufEnter *.hbs.* setlocal ft=handlebars
 autocmd FileType gitcommit setlocal spell spelllang=en spellfile=~/.vim/spell/en.utf-8.add
+autocmd BufWritePost Gemfile !bundle install
 
 " autocmd FileType qf cla
 let mapleader = ','
