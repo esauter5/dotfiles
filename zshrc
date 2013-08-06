@@ -83,7 +83,7 @@ setopt always_to_end
 setopt auto_cd
 setopt auto_pushd
 setopt c_bases
-setopt correct
+setopt nocorrect
 setopt extended_glob
 setopt hist_ignore_all_dups
 setopt hist_ignore_space
@@ -144,7 +144,7 @@ alias binit="bi && b package && echo 'vendor/ruby' >> .gitignore"
 
 source /usr/local/opt/chruby/share/chruby/chruby.sh
 source /usr/local/opt/chruby/share/chruby/auto.sh
-
+chruby 2
 
 t ()
 {
