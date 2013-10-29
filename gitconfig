@@ -35,7 +35,6 @@
   br              = branch
   ci              = commit
   ap              = add -p
-  cp              = cherry-pick
 [push]
   default         = tracking
 [github]
