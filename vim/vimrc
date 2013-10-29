@@ -41,12 +41,13 @@ Bundle 'tpope/vim-eunuch.git'
 Bundle 'tpope/vim-haml'
 Bundle 'tpope/vim-rails.git'
 Bundle 'tpope/vim-speeddating'
+Bundle 'tpope/vim-abolish'
 Bundle 'vim-coffee-script'
 
 filetype plugin indent on
 
 syntax enable
-set bg=dark
+" set bg=dark
 colorscheme peaksea
 
 "filetype on		    " fast
@@ -83,7 +84,7 @@ set confirm
 set expandtab
 set history=1000
 set hlsearch
-set ignorecase
+" set ignorecase
 set incsearch
 set lazyredraw
 set listchars=tab:>-,trail:_
@@ -102,7 +103,7 @@ set switchbuf=useopen
 set virtualedit=block
 set number
 set list
-set shell=$SHELL\ -l
+" set shell=$SHELL\ -l
 
 set backupskip=/tmp/*,/private/tmp/*
 
@@ -120,30 +121,44 @@ vmap gl :<C-U>!git blame <C-R>=expand("%:p") <CR> \| sed -n <C-R>=line("'<") <CR
 
 let g:rails_projections = {
       \  "acceptance/*_spec.rb": {
-      \    "command": "acceptance",
-      \    "affinity": "model"
+      \    "command": "acceptance"
       \  },
       \  "spec/support/*": {
       \    "command": "support"
       \  },
       \ "spec/features/*.feature": {
       \  "command": "feature",
-      \  "affinity": "model"
+      \  "alternate": "spec/features/step_definitions/%s_steps.rb"
       \ },
       \ "spec/features/step_definitions/*_steps.rb": {
-      \  "command": "step"
+      \  "command": "step",
+      \  "alternate": "spec/features/%s.feature"
       \ },
       \ "spec/factories/*.rb": {
       \  "command": "factory",
       \  "affinity": "model"
+      \ },
+      \ "app/uploaders/*.rb": {
+      \  "command": "uploader"
+      \ },
+      \ "app/admin/*.rb": {
+      \  "command": "admin",
+      \  "affinity": "model"
+      \ },
+      \ "db/structure.sql": {
+      \  "command": "structure",
+      \  "affinity": "database"
       \ }
       \}
 
 autocmd BufEnter *.hbs.* setlocal ft=handlebars
 autocmd FileType gitcommit setlocal spell spelllang=en spellfile=~/.vim/spell/en.utf-8.add
-autocmd BufWritePost Gemfile !bundle install
+" autocmd BufWritePost Gemfile !bundle install
 
 " autocmd FileType qf cla
+autocmd FileType qf set nowinfixheight
+autocmd BufRead Capfile,Gemfile,Rakefile,Guardfile,Procfile set ft=ruby
+set equalalways
 let mapleader = ','
 
 map <Leader><Space> :nohlsearch<CR>
@@ -217,11 +232,14 @@ map <Leader>r :!touch tmp/restart.txt<CR><CR>
 " map <Leader>l :call RunCurrentTest()<Enter>
 """ End Rails Test Stuff
 
-"
-map <F1> :Dispatch bundle exec rspec %<CR>
-map <F2> :Dispatch bundle exec rspec %:<C-R>=line('.')<CR><CR>
-map <F3> :Dispatch bundle exec rspec<CR>
-"
+" "
+" map <F1> :Dispatch bundle exec rspec %<CR>
+" map <F2> :Dispatch bundle exec rspec %:<C-R>=line('.')<CR><CR>
+" map <F3> :Dispatch bundle exec rspec<CR>
+" "
+" " map <F1> :Dispatch RAILS_ENV=test rake spec %<CR>
+" " map <F2> :Dispatch RAILS_ENV=test rake spec %:<C-R>=line('.')<CR><CR>
+" " map <F3> :Dispatch RAILS_ENV=test rake spec<CR>
 
 let @r="require 'ruby-debug';debugger"
 " re-indent xml
@@ -230,3 +248,10 @@ map <F4> :%s/>\s*</>\r</g<CR>:set ft=xml<CR>gg=G
 map <F5> :%s/{/{\r/g<CR>:%s/}/\r}/g<CR>:%s/,/,\r/g<CR>:set ft=javascript<CR>gg=G
 
 vmap <Leader>t <Plug>SendSelectionToTmux
+
+autocmd! BufReadPost gitcommit
+  \ if line("'\"") > 0 && line("'\"") <= line("$") |
+  \   exe "normal g`\"" |
+  \ endif
+autocmd FileType gitcommit setlocal spell spelllang=en_us
+autocmd FileType gitcommit DiffGitCached | wincmd L

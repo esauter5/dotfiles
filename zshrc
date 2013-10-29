@@ -1,6 +1,8 @@
-autoload -Uz promptinit zmv
-PROMPT="%# "
+autoload -Uz promptinit zmv colors
+colors
+PROMPT="%(2j.%j jobs are running .%(1j.%j job is running .))%# "
 promptinit && prompt bart red cyan green yellow
+
 zstyle ':completion::complete:*' use-cache 1
 
 #export TERM=${TERM:/xterm/xterm-256color} #Workaround Terminal/vte bug/argument.
@@ -174,7 +176,7 @@ order ()
 function chpwd()
 {
    clear
-   ls
+   ll -A
 }
 
 function fix_tmux_env()
