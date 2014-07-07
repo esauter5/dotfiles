@@ -1,5 +1,6 @@
-autoload -Uz promptinit zmv
-PROMPT="%# "
+autoload -Uz promptinit zmv colors
+colors
+PROMPT="%(2j.%j jobs are running .%(1j.%j job is running .))%# "
 promptinit && prompt bart red cyan green yellow
 zstyle ':completion::complete:*' use-cache 1
 
@@ -83,7 +84,7 @@ setopt always_to_end
 setopt auto_cd
 setopt auto_pushd
 setopt c_bases
-setopt correct
+setopt nocorrect
 setopt extended_glob
 setopt hist_ignore_all_dups
 setopt hist_ignore_space
@@ -120,6 +121,7 @@ fi
 
 source /usr/share/chruby/chruby.sh
 source /usr/share/chruby/auto.sh
+chruby 2.1.0 # Set a default
 
 alias les="less"
 alias	ll="ls -thor"
@@ -144,7 +146,7 @@ alias bi="b install --path vendor"
 alias bil="bi --local"
 alias bu="b update"
 alias be="b exec"
-alias binit="bi && b package && echo 'vendor/ruby' >> .gitignore"
+alias binit="bi && b package --all && echo 'vendor/ruby' >> .gitignore"
 # alias gg='git goggles'
 # alias tvv="tv /usr/local/Cellar/macvim/7.3-64/MacVim.app/Contents/MacOS/Vim"
 
@@ -218,6 +220,11 @@ function unix2dos()
   sed -e 's,\r*$,\r,'
 }
 
+function tarbomb()
+{
+  [[ $(tar tf "$1" | sed 's,^\./,,' | awk -F/ '{print $1}' | sort | uniq | wc -l) -eq 1 ]] && echo "OK" || echo 'Tarbomb!'
+}
+
 # The following lines were added by compinstall
 
 zstyle ':completion:*' completer _expand _complete _ignored
@@ -249,4 +256,3 @@ function man () {
           LESS_TERMCAP_us=$(printf "\e[1;32m")\
           man "$@"
 }
-

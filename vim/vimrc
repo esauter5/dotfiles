@@ -10,9 +10,9 @@ Bundle 'DirDiff.vim'
 Bundle 'ervandew/supertab'
 Bundle 'fugitive.vim'
 Bundle 'gmarik/vundle'
-Bundle 'jQuery'
+" Bundle 'jQuery'
 Bundle 'matchit.zip'
-Bundle 'pangloss/vim-javascript'
+" Bundle 'pangloss/vim-javascript'
 Bundle 'ruby-matchit'
 Bundle 'ScrollColors'
 Bundle 'surround.vim'
@@ -22,25 +22,34 @@ Bundle 'textobj-user'
 Bundle 'tpope/vim-rails.git'
 Bundle 'tpope/vim-eunuch.git'
 Bundle 'vim-coffee-script'
-Bundle 'DrawIt'
-Bundle 'Markdown'
-Bundle 'jgdavey/vim-turbux'
-Bundle 'jgdavey/tslime.vim'
+" Bundle 'DrawIt'
+" Bundle 'Markdown'
+" Bundle 'jgdavey/vim-turbux'
+" Bundle 'jgdavey/tslime.vim'
 Bundle 'tpope/vim-endwise'
 Bundle 'tpope/vim-speeddating'
 Bundle 'tpope/vim-commentary'
 Bundle 'tpope/vim-haml'
 Bundle 'Solarized'
 Bundle 'scrooloose/nerdcommenter'
-Bundle 'nono/vim-handlebars'
+" Bundle 'nono/vim-handlebars'
 Bundle 'tpope/vim-dispatch'
+Bundle 'Syntastic'
+
+" Syntastic settings
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+let g:syntastic_auto_jump = 1
+" end Syntastic settings
 
 filetype plugin indent on
 
 syntax enable
-" let g:solarized_termtrans=1
-set bg=dark
-colorscheme peaksea
+let g:solarized_termtrans=1
+" set bg=dark
+" colorscheme peaksea
+colorscheme solarized
 
 "filetype on		    " fast
 "filetype off		    " fast
@@ -60,11 +69,14 @@ map NN :next<CR>
 map PP :previous<CR>
 map + <C-A>
 map - <C-X>
+" map ,, :!rm -f spec/cassettes/*<cr>\|:Dispatch bundle exec rspec spec acceptance -t wip<cr>
 cmap w!! w !sudo tee %
 command T tabedit README
 
 inoremap <C-F> <C-X><C-F>
 inoremap <C-L> <C-X><C-L>
+
+nnoremap <CR> :nohlsearch<cr>
 
 set autoindent
 set autoread
@@ -75,7 +87,9 @@ set expandtab
 set history=1000
 set hlsearch
 set ignorecase
+set smartcase
 set incsearch
+set lazyredraw
 set listchars=tab:>-,trail:_
 set nowrap
 set pastetoggle=<F5>
@@ -92,6 +106,12 @@ set switchbuf=useopen
 set virtualedit=block
 set number
 set list
+" Turn on per-folder .vimrc sourcing
+set exrc
+" Make per-folder .vimrc files safer
+set secure
+
+map ,, :Dispatch bundle exec rspec spec<cr>
 
 cabbrev h vertical help
 iabbrev DD <C-r>=strftime("%c")<CR> 
@@ -116,31 +136,80 @@ vmap gl :<C-U>!git blame <C-R>=expand("%:p") <CR> \| sed -n <C-R>=line("'<") <CR
 " autocmd User Rails Rnavcommand import app/importers
 " autocmd User Rails Rnavcommand export app/exporters
 let g:rails_projections = {
+      \  "acceptance/*_spec.rb": {
+      \    "command": "acceptance"
+      \  },
+      \  "spec/support/*": {
+      \    "command": "support"
+      \  },
       \ "spec/features/*.feature": {
       \  "command": "feature",
-      \  "affinity": "model"
+      \  "alternate": "spec/features/step_definitions/%s_steps.rb"
       \ },
       \ "spec/features/step_definitions/*_steps.rb": {
-      \  "command": "step"
+      \  "command": "step",
+      \  "alternate": "spec/features/%s.feature"
       \ },
       \ "spec/factories/*.rb": {
       \  "command": "factory",
       \  "affinity": "model"
+      \ },
+      \ "app/uploaders/*.rb": {
+      \  "command": "uploader"
+      \ },
+      \ "app/admin/*.rb": {
+      \  "command": "admin",
+      \  "affinity": "model"
+      \ },
+      \ "app/workers/*.rb": {
+      \  "command": "worker"
+      \ },
+      \ "db/structure.sql": {
+      \  "command": "structure",
+      \  "affinity": "database"
       \ }
       \}
 
 autocmd BufEnter *.hbs.* setlocal ft=handlebars
-autocmd BufWritePost Gemfile !bundle install
+autocmd FileType gitcommit setlocal spell spelllang=en spellfile=~/.vim/spell/en.utf-8.add
+" autocmd BufWritePost Gemfile !bundle install
 
+" autocmd FileType qf cla
+autocmd FileType qf set nowinfixheight
+autocmd BufRead Capfile,Gemfile,Rakefile,Guardfile,Procfile set ft=ruby
+
+function! ResCur()
+  if line("'\"") <= line("$")
+    normal! g`"
+    return 1
+  endif
+endfunction
+
+augroup resCur
+  autocmd!
+  autocmd BufWinEnter * call ResCur()
+augroup END
+
+set equalalways
 let mapleader = ','
 
-map <Leader><Space> :nohlsearch<CR>
-map <Leader>, :%s/\s\+$//<CR>
+map <Leader>. :Tabularize/
 
 let g:turbux_command_prefix = 'bundle exec'
 
-let @r="require 'ruby-debug';debugger"
+let @r="require 'pry';binding.pry"
 " re-indent xml
 map <F3> :%s/>\s*</>\r</g<CR>:set ft=xml<CR>gg=G
 " re-indent json
 map <F4> :%s/{/{\r/g<CR>:%s/}/\r}/g<CR>:%s/,/,\r/g<CR>:set ft=javascript<CR>gg=G
+
+" Apply rspec focus tag
+map <Leader>f :s/ \<do\>$/, :focus do/<cr><esc>:noh<cr>
+map <Leader>g ?:focus<cr><esc>:s/, :focus//<cr><esc>:noh<cr>
+
+autocmd! BufReadPost gitcommit
+  \ if line("'\"") > 0 && line("'\"") <= line("$") |
+  \   exe "normal g`\"" |
+  \ endif
+autocmd FileType gitcommit setlocal spell spelllang=en_us
+autocmd FileType gitcommit DiffGitCached | wincmd L
