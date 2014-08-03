@@ -1,0 +1,2 @@
+#!/bin/sh
+mkdir -p .git/info && echo $* >> .git/info/exclude

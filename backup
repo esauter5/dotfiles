@@ -1,0 +1,27 @@
+#!/bin/zsh -e
+setopt err_exit
+
+ionice -c 3 -p $$
+renice +12  -p $$
+
+#source ~/.keychain/$(hostname)-sh
+keychain
+backup_server=$(iwconfig wlan0 | grep -q "BATCAVE\|WayneManor" && echo 'batman' || echo 'home')
+backup_folder=/media/backup/${HOST}
+last_complete=${backup_folder}/$(ssh ${backup_server} ls ${backup_folder} | sort -n | tail -n 1)
+dest=${backup_folder}/.incomplete
+
+rsync --archive \
+      --one-file-system\
+      -vP \
+      --hard-links \
+      --bwlimit=500 \
+      --numeric-ids\
+      --delete \
+      --delete-excluded\
+      --exclude-from=/home/paul/.rsync/exclude \
+      --link-dest=${last_complete} \
+      /home/paul/ ${backup_server}:${dest} && \
+ssh $backup_server mv ${dest} ${backup_folder}/$(date +%Y.%m.%d.%H.%M.%S)
+
+rsync -a --delete --ignore-errors /etc/  $backup_server:${backup_folder}/etc
