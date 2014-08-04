@@ -178,6 +178,10 @@ autocmd FileType gitcommit setlocal spell spelllang=en spellfile=~/.vim/spell/en
 autocmd FileType qf set nowinfixheight
 autocmd BufRead Capfile,Gemfile,Rakefile,Guardfile,Procfile set ft=ruby
 
+"Fix cron on OSX
+"Avoids error 'crontab: temp file must be edited in place'
+autocmd FileType crontab set backupskip=/tmp/*,/private/tmp/*
+
 function! ResCur()
   if line("'\"") <= line("$")
     normal! g`"

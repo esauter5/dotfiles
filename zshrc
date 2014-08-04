@@ -147,8 +147,6 @@ alias bil="bi --local"
 alias bu="b update"
 alias be="b exec"
 alias binit="bi && b package --all && echo 'vendor/ruby' >> .gitignore"
-# alias gg='git goggles'
-# alias tvv="tv /usr/local/Cellar/macvim/7.3-64/MacVim.app/Contents/MacOS/Vim"
 
 t ()
 {
@@ -238,8 +236,6 @@ zstyle ':completion:*' squeeze-slashes true
 zstyle ':completion:*' substitute '1 '
 zstyle ':completion:*' verbose true
 zstyle :compinstall filename '/home/paul/.zshrc'
-fpath=(/usr/local/share/zsh-completions $fpath)
-
 
 autoload -Uz compinit
 compinit
