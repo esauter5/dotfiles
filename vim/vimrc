@@ -1,6 +1,6 @@
 set nocompatible
 filetype off
-set rtp+=$HOME/.vim/bundle/vundle/
+set rtp+=$HOME/.vim/bundle/Vundle.vim/
 call vundle#rc()
 
 Bundle 'Align'
@@ -34,7 +34,10 @@ Bundle 'Solarized'
 Bundle 'scrooloose/nerdcommenter'
 " Bundle 'nono/vim-handlebars'
 Bundle 'tpope/vim-dispatch'
+Bundle 'tpope/vim-markdown'
 Bundle 'Syntastic'
+Bundle 'fatih/vim-go'
+Bundle 'jiangmiao/auto-pairs'
 
 " Syntastic settings
 set statusline+=%#warningmsg#
@@ -47,8 +50,7 @@ filetype plugin indent on
 
 syntax enable
 let g:solarized_termtrans=1
-" set bg=dark
-" colorscheme peaksea
+set bg=dark
 colorscheme solarized
 
 "filetype on		    " fast
@@ -90,7 +92,7 @@ set ignorecase
 set smartcase
 set incsearch
 set lazyredraw
-set listchars=tab:>-,trail:_
+set listchars=tab:>-,trail:…
 set nowrap
 set pastetoggle=<F5>
 set ruler
@@ -104,14 +106,13 @@ set softtabstop=2
 set splitright
 set switchbuf=useopen
 set virtualedit=block
-set number
+" set number
 set list
 " Turn on per-folder .vimrc sourcing
 set exrc
 " Make per-folder .vimrc files safer
 set secure
-
-map ,, :Dispatch bundle exec rspec spec<cr>
+set tabpagemax=99
 
 cabbrev h vertical help
 iabbrev DD <C-r>=strftime("%c")<CR> 
@@ -174,9 +175,15 @@ autocmd BufEnter *.hbs.* setlocal ft=handlebars
 autocmd FileType gitcommit setlocal spell spelllang=en spellfile=~/.vim/spell/en.utf-8.add
 " autocmd BufWritePost Gemfile !bundle install
 
+autocmd FileType go setlocal tabstop=2 softtabstop=2 shiftwidth=2 noexpandtab nolist
+
 " autocmd FileType qf cla
 autocmd FileType qf set nowinfixheight
-autocmd BufRead Capfile,Gemfile,Rakefile,Guardfile,Procfile set ft=ruby
+autocmd BufRead Capfile,Gemfile,Rakefile,Guardfile,Procfile,Vagrantfile,Berksfile set ft=ruby
+
+autocmd FileType ruby map ,, :Dispatch bundle exec rspec spec<cr>
+autocmd FileType go map ,, :Dispatch go run %<cr>
+
 
 "Fix cron on OSX
 "Avoids error 'crontab: temp file must be edited in place'

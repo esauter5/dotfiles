@@ -105,7 +105,9 @@ HISTSIZE=100000
 HISTFILE="${HOME}/.zsh_history"
 READNULLCMD=less
 REPORTTIME=7
-typeset -U PATH="./bin:${HOME}/local/bin:${HOME}/local/sbin:${HOME}/.local/bin:/sbin:/usr/local/bin:$PATH"
+
+export GOROOT=`go env GOROOT`
+typeset -U PATH="./bin:${HOME}/local/bin:${HOME}/local/sbin:${HOME}/.local/bin:/sbin:/usr/local/bin:$PATH:$GOROOT/bin"
 
 export LESS="-RXei"
 export EDITOR="vim"
@@ -114,13 +116,12 @@ export EDITOR="vim"
 if running_osx; then
   export LSCOLORS=ExfxcxdxbxExExabagacad
   alias	ls="ls -hFG"
-  alias vim='/usr/local/Cellar/macvim/7.3-64/MacVim.app/Contents/MacOS/Vim'
 elif running_linux; then
   alias ls="ls -hF --color"
 fi
 
-source /usr/share/chruby/chruby.sh
-source /usr/share/chruby/auto.sh
+source /usr/local/opt/chruby/share/chruby/chruby.sh
+source /usr/local/opt/chruby/share/chruby/auto.sh
 chruby 2.1.0 # Set a default
 
 alias les="less"
