@@ -85,7 +85,6 @@ set autoread
 set autowrite
 set backspace=indent,eol,start
 set confirm
-set encoding=utf8
 set expandtab
 set history=1000
 set hlsearch
@@ -93,7 +92,6 @@ set ignorecase
 set smartcase
 set incsearch
 set lazyredraw
-set listchars=tab:>-,trail:…
 set nowrap
 set pastetoggle=<F5>
 set ruler
@@ -108,7 +106,6 @@ set splitright
 set switchbuf=useopen
 set virtualedit=block
 " set number
-set list
 " Turn on per-folder .vimrc sourcing
 set exrc
 " Make per-folder .vimrc files safer
