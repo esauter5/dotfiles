@@ -6,8 +6,9 @@ for dotfile sourcefile in ${(kv)files}
 do
   if [ ! -e ~/${dotfile} ]
   then
-    ln -s ~/.dotfiles/${sourcefile} ~/${dotfile}
+    rm -f ~/${dotfile}
   fi
+  ln -s ~/.dotfiles/${sourcefile} ~/${dotfile}
 done
 
 git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
