@@ -111,6 +111,7 @@ REPORTTIME=7
 
 export LESS="-RXei"
 export EDITOR="vim"
+export TZ="America/New_York"
 
 
 if running_osx; then
