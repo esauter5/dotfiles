@@ -10,3 +10,5 @@ do
   fi
 done
 
+git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+vim ~/.vimrc +PluginInstall +qa
