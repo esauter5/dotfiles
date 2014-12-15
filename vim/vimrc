@@ -38,6 +38,12 @@ Bundle 'tpope/vim-markdown'
 Bundle 'Syntastic'
 Bundle 'fatih/vim-go'
 Bundle 'jiangmiao/auto-pairs'
+Bundle 'guns/vim-clojure-static'
+Bundle 'tpope/vim-fireplace'
+Plugin 'paredit.vim'
+Plugin 'rainbow_parentheses.vim'
+Plugin 'jpalardy/vim-slime'
+let g:slime_target = "tmux"
 
 " Syntastic settings
 set statusline+=%#warningmsg#
@@ -181,6 +187,7 @@ autocmd BufRead Capfile,Gemfile,Rakefile,Guardfile,Procfile,Vagrantfile,Berksfil
 
 autocmd FileType ruby map ,, :Dispatch bundle exec rspec spec<cr>
 autocmd FileType go map ,, :Dispatch go run %<cr>
+autocmd FileType clojure map ,, :Dispatch lein test<cr>
 
 
 "Fix cron on OSX
