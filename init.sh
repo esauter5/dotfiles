@@ -4,7 +4,7 @@ files=(.vim vim .vimrc vim/vimrc .gvimrc vim/gvimrc .tmux.conf tmux.conf .zshrc 
 
 for dotfile sourcefile in ${(kv)files}
 do
-  if [ ! -e ~/${dotfile} ]
+  if [ -e ~/${dotfile} ]
   then
     rm -f ~/${dotfile}
   fi
