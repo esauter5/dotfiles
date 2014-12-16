@@ -1,259 +1,88 @@
-autoload -Uz promptinit zmv colors
-colors
-PROMPT="%(2j.%j jobs are running .%(1j.%j job is running .))%# "
-promptinit && prompt bart red cyan green yellow
-zstyle ':completion::complete:*' use-cache 1
+# Path to your oh-my-zsh configuration.
+ZSH=$HOME/.oh-my-zsh
 
-#export TERM=${TERM:/xterm/xterm-256color} #Workaround Terminal/vte bug/argument.
+# Set name of the theme to load.
+# Look in ~/.oh-my-zsh/themes/
+# Optionally, if you set this to "random", it'll load a random theme each
+# time that oh-my-zsh is loaded.
+ZSH_THEME="robbyrussell"
 
-function running_osx() {
-  uname -a | grep -qi darwin 
-}
+# Example aliases
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
 
-function running_linux() {
-  uname -a | grep -qi linux
-}
+# Set to this to use case-sensitive completion
+# CASE_SENSITIVE="true"
 
-# if running_linux; then
-#   eval `keychain --eval --quiet --quick --agents ssh`
-#   function add_all_ssh_keys()
-#   {
-#     ssh-add $(grep -lR PRIVATE ~/.ssh)
-#     if [ -n "${TMUX+x}" ]; then
-#       tmux set-environment SSH_AGENT_PID $SSH_AGENT_PID
-#       tmux set-environment SSH_AUTH_SOCK $SSH_AUTH_SOCK
-#     fi
-# }
-# alias ssh="(ssh-add -l > /dev/null || add_all_ssh_keys ) && ssh"
+# Uncomment this to disable bi-weekly auto-update checks
+# DISABLE_AUTO_UPDATE="true"
+
+# Uncomment to change how often before auto-updates occur? (in days)
+# export UPDATE_ZSH_DAYS=13
+
+# Uncomment following line if you want to disable colors in ls
+# DISABLE_LS_COLORS="true"
+
+# Uncomment following line if you want to disable autosetting terminal title.
+# DISABLE_AUTO_TITLE="true"
+
+# Uncomment following line if you want to disable command autocorrection
+# DISABLE_CORRECTION="true"
+
+# Uncomment following line if you want red dots to be displayed while waiting for completion
+# COMPLETION_WAITING_DOTS="true"
+
+# Uncomment following line if you want to disable marking untracked files under
+# VCS as dirty. This makes repository status check for large repositories much,
+# much faster.
+# DISABLE_UNTRACKED_FILES_DIRTY="true"
+
+# Uncomment following line if you want to  shown in the command execution time stamp 
+# in the history command output. The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|
+# yyyy-mm-dd
+# HIST_STAMPS="mm/dd/yyyy"
+
+# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
+# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+plugins=(git)
+
+source $ZSH/oh-my-zsh.sh
+
+# User configuration
+
+export PATH="/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin"
+# export MANPATH="/usr/local/man:$MANPATH"
+
+# # Preferred editor for local and remote sessions
+# if [[ -n $SSH_CONNECTION ]]; then
+#   export EDITOR='vim'
+# else
+#   export EDITOR='mvim'
 # fi
 
-bindkey -v
-bindkey ' ' magic-space
-bindkey -v ^R history-incremental-search-backward
-bindkey -v ^F history-incremental-search-forward
+# Compilation flags
+# export ARCHFLAGS="-arch x86_64"
 
-#autoload predict-on
-#zle -N predict-on
-#zle -N predict-off
-#bindkey '^X^Z' predict-on
-#bindkey '^Z' predict-off
-#predict-on
+# ssh
+# export SSH_KEY_PATH="~/.ssh/dsa_id"
 
+alias bx='bundle exec'
 
-### http://www.zsh.org/mla/users/2002/msg00138.html ############
-function __up_or_down_line_or_beginning_search {               #
-if [[ $LASTWIDGET != down-line-or-beginning-search &&          #
-      $LASTWIDGET != up-line-or-beginning-search ]]; then      #
-    local LBUFFER_STRIPPED="${LBUFFER/#[       ]#/}"           #
-    if [[ $RBUFFER == *$'\n'* ||                               #
-          ${LBUFFER_STRIPPED} == "" ]]; then                   #
-        __last_up_line=up-line-or-history                      #
-        __last_down_line=down-line-or-history                  #
-    else                                                       #
-        LBUFFER_STRIPPED="${LBUFFER_STRIPPED/#[^   ]#[   ]#/}" #
-        if [[ "$LBUFFER_STRIPPED" == "" ]]; then               #
-            __last_up_line=up-line-or-search                   #
-            __last_down_line=down-line-or-search               #
-        else                                                   #
-            __last_up_line=history-beginning-search-backward   #
-            __last_down_line=history-beginning-search-forward  #
-        fi                                                     #
-    fi                                                         #
-fi                                                             #
-}                                                              #
-zle -N __up_or_down_line_or_beginning_search                   #
-                                                               #
-function up-line-or-beginning-search {                         #
-    __up_or_down_line_or_beginning_search                      #
-    zle .${__last_up_line:-beep}                               #
-}                                                              #
-                                                               #
-function down-line-or-beginning-search {                       #
-    __up_or_down_line_or_beginning_search                      #
-    zle .${__last_down_line:-beep}                             #
-}                                                              #
-                                                               #
-zle -N up-line-or-beginning-search                             #
-zle -N down-line-or-beginning-search                           #
-                                                               #
-bindkey "^[[A" up-line-or-beginning-search                     #
-bindkey "^[[B" down-line-or-beginning-search                   #
-### http://www.zsh.org/mla/users/2002/msg00138.html ############
-
-setopt always_to_end
-setopt auto_cd
-setopt auto_pushd
-setopt c_bases
-setopt nocorrect
-setopt extended_glob
-setopt hist_ignore_all_dups
-setopt hist_ignore_space
-setopt hist_reduce_blanks
-setopt hist_verify
-##  ##  setopt ksh_arrays # On Thu 02 Jun 2011 12:20:24 PM EDT this broke tab completion. The effect is that arrays are zero-indexed with ksh_arrays set, and one-indexed without.
-setopt list_packed
-setopt list_rows_first
-setopt null_glob
-setopt path_dirs
-setopt pushd_ignore_dups
-setopt pushd_silent
-setopt share_history
-setopt short_loops
-
-SAVEHIST=100000
-HISTSIZE=100000
-HISTFILE="${HOME}/.zsh_history"
-READNULLCMD=less
-REPORTTIME=7
-
-# export GOROOT=`go env GOROOT`
-# typeset -U PATH="./bin:${HOME}/local/bin:${HOME}/local/sbin:${HOME}/.local/bin:/sbin:/usr/local/bin:$PATH:$GOROOT/bin"
-
-export LESS="-RXei"
-export EDITOR="vim"
-export TZ="America/New_York"
+alias sv='cd ~/Code/LG/scoutvision'
+alias td='cd ~/Code/LG/telemetry-dao'
+alias ts='cd ~/Code/LG/telemetry-services'
 
 
-if running_osx; then
-  export LSCOLORS=ExfxcxdxbxExExabagacad
-  alias	ls="ls -hFG"
-elif running_linux; then
-  alias ls="ls -hF --color"
-fi
+alias gs='git status'
 
-# source /usr/local/opt/chruby/share/chruby/chruby.sh
-# source /usr/local/opt/chruby/share/chruby/auto.sh
-# chruby 2.1.0 # Set a default
+alias rs='rails s'
+alias rdb='rails db'
+alias rc='rails console'
+alias ..='cd ..'
+alias ...='cd ...'
+alias reset_db='rake db:drop; rake db:create; rake db:migrate'
 
-alias les="less"
-alias	ll="ls -thor"
-alias l1="ls -1"
-alias	l="ls -1rt"
-alias	rm="rm -i"
-alias	mv="mv -i"
-alias	cp="cp -i"
-alias pop="popd"
-alias p="pushd"
-alias pp="cd ~2"
-alias ri="ri -f ansi"
-alias h="history"
-if running_linux; then
-  alias open="xdg-open"
-fi
-alias e='exec'
-alias gst='git status'
-alias ta='tmux -2 attach || tn'
-alias b="bundle"
-alias bi="b install --path vendor"
-alias bil="bi --local"
-alias bu="b update"
-alias be="b exec"
-alias binit="bi && b package --all && echo 'vendor/ruby' >> .gitignore"
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
-t ()
-{
-  tmux new-window "$*"
-}
-
-ts ()
-{
-  tmux split-window "$*"
-}
-
-tv ()
-{
-  tmux split-window -h "$*"
-}
-
-tsd ()
-{
-  tmux split-window -d "$*"
-}
-
-tvd ()
-{
-  tmux split-window -h -d "$*"
-}
-
-tn ()
-{
-  tmux -2 new -s $(basename $(pwd))
-}
-
-didi ()
-{
-   (history 1 | grep -v "didi" | grep "$*") || (grep "$*" $HISTFILE | grep -v didi)
-}
-
-order ()
-{
-   sort $1 | uniq -c | sort -n
-}
-
-function chpwd()
-{
-   clear
-   ls
-}
-
-function fix_tmux_env()
-{
-  # Sometimes my tmux sessions get muddled. I SHOULD find and correct the
-  # problem, but for now, exporting these variables fixes it.
-  tmux set-environment PATH $PATH
-  tmux set-environment GEM_HOME $GEM_HOME
-  tmux set-environment GEM_PATH $GEM_PATH
-}
-
-function decolor()
-{
-  sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g"
-}
-
-function dos2unix()
-{
-  tr -d '\r'
-}
-
-function unix2dos()
-{
-  sed -e 's,\r*$,\r,'
-}
-
-function tarbomb()
-{
-  [[ $(tar tf "$1" | sed 's,^\./,,' | awk -F/ '{print $1}' | sort | uniq | wc -l) -eq 1 ]] && echo "OK" || echo 'Tarbomb!'
-}
-
-# The following lines were added by compinstall
-
-zstyle ':completion:*' completer _expand _complete _ignored
-zstyle ':completion:*' completions '1 '
-zstyle ':completion:*' expand prefix suffix
-zstyle ':completion:*' file-sort modification
-zstyle ':completion:*' glob '1 '
-zstyle ':completion:*' list-colors ''
-zstyle ':completion:*' list-suffixes true
-zstyle ':completion:*' squeeze-slashes true
-zstyle ':completion:*' substitute '1 '
-zstyle ':completion:*' verbose true
-zstyle :compinstall filename '/home/paul/.zshrc'
-
-autoload -Uz compinit
-compinit
-# End of lines added by compinstall
-
-function man () {
-	env\
-          LESS_TERMCAP_mb=$(printf "\e[1;31m")\
-          LESS_TERMCAP_md=$(printf "\e[1;31m")\
-          LESS_TERMCAP_me=$(printf "\e[0m")\
-          LESS_TERMCAP_se=$(printf "\e[0m")\
-          LESS_TERMCAP_so=$(printf "\e[1;44;33m")\
-          LESS_TERMCAP_ue=$(printf "\e[0m")\
-          LESS_TERMCAP_us=$(printf "\e[1;32m")\
-          man "$@"
-}
-
-# eval "$(fasd --init auto)"
-# [[ -s "/Users/postazeski/.gvm/scripts/gvm" ]] && source "/Users/postazeski/.gvm/scripts/gvm"
+[[ -s `brew --prefix`/etc/autojump.sh ]] && . `brew --prefix`/etc/autojump.sh
