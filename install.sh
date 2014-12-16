@@ -1,5 +1,6 @@
 #!/bin/sh
 set -ex
-yes | sudo pacman -S zsh tmux
+curl -L http://install.ohmyz.sh
+#yes | sudo pacman -S tmux
 sudo sed -i "/esauter/ s/bash/zsh/" /etc/passwd
 ./init.sh
