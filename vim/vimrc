@@ -4,10 +4,11 @@ set rtp+=$HOME/.vim/bundle/Vundle.vim/
 call vundle#rc()
 
 Plugin 'gmarik/vundle'
-Plugin 'scrooloose/nerdtree'
+"Plugin 'scrooloose/nerdtree'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'rainbow_parentheses.vim'
 Plugin 'Lokaltog/vim-easymotion'
+Plugin 'kien/ctrlp.vim'
 "Bundle 'Align'
 "Bundle 'Colour-Sampler-Pack'
 "Bundle 'CSApprox'
@@ -105,3 +106,5 @@ au VimEnter * RainbowParenthesesToggle
 au Syntax * RainbowParenthesesLoadRound
 au Syntax * RainbowParenthesesLoadSquare
 au Syntax * RainbowParenthesesLoadBraces
+
+map <C-n> :NERDTreeToggle<CR>
