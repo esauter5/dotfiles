@@ -51,6 +51,7 @@ filetype plugin indent on
 
 let mapleader="\<Space>"
 
+syntax on
 set tabstop=2       " number of visual spaces per TAB
 set softtabstop=2   " number of spaces in tab when editing
 set expandtab       " tabs are spaces
@@ -82,7 +83,7 @@ set autoread " Autoload files that have changed
 
 function! NumberToggle()
   if(&relativenumber == 1)
-    set number
+    set norelativenumber
   else
     set relativenumber
   endif
@@ -91,14 +92,14 @@ endfunc
 nnoremap <Bslash> :call NumberToggle()<cr>
 
 set rnu
-au BufEnter * :set rnu
-au BufLeave * :set nu
-au WinEnter * :set rnu
-au WinLeave * :set nu
-au InsertEnter * :set nu
-au InsertLeave * :set rnu
-au FocusLost * :set nu
-au FocusGained * :set rnu
+"au BufEnter * :set rnu
+"au BufLeave * :set nu
+"au WinEnter * :set rnu
+"au WinLeave * :set nu
+"au InsertEnter * :set nu
+"au InsertLeave * :set rnu
+"au FocusLost * :set nu
+"au FocusGained * :set rnu
 
 au VimEnter * RainbowParenthesesToggle
 au Syntax * RainbowParenthesesLoadRound
