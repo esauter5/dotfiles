@@ -1,6 +1,15 @@
 #!/bin/zsh
 typeset -A files
-files=(.vim vim .vimrc vim/vimrc .gvimrc vim/gvimrc .tmux.conf tmux.conf .zshrc zshrc .zshenv zshenv .gitconfig gitconfig .psqlrc psqlrc .git_template git_template)
+files=(.vim vim
+       .vimrc vim/vimrc
+       .gvimrc vim/gvimrc
+       .tmux.conf tmux.conf
+       .zshrc zshrc
+       .zshenv zshenv
+       .gitconfig gitconfig
+       .psqlrc psqlrc
+       .git_template git_template
+       .lein lein)
 
 for dotfile sourcefile in ${(kv)files}
 do
