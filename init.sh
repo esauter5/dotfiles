@@ -1,4 +1,8 @@
 #!/bin/zsh
+set -ex
+yes | sudo pacman -S zsh tmux
+sudo sed -i "/esauter/ s/bash/zsh/" /etc/passwd
+
 typeset -A files
 files=(.vim vim
        .vimrc vim/vimrc

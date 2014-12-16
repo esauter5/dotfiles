@@ -3,229 +3,104 @@ filetype off
 set rtp+=$HOME/.vim/bundle/Vundle.vim/
 call vundle#rc()
 
-Bundle 'Align'
-Bundle 'Colour-Sampler-Pack'
-Bundle 'CSApprox'
-Bundle 'DirDiff.vim'
-Bundle 'ervandew/supertab'
-Bundle 'fugitive.vim'
-Bundle 'gmarik/vundle'
+Plugin 'gmarik/vundle'
+Plugin 'scrooloose/nerdtree'
+Plugin 'jiangmiao/auto-pairs'
+Plugin 'rainbow_parentheses.vim'
+Plugin 'Lokaltog/vim-easymotion'
+"Bundle 'Align'
+"Bundle 'Colour-Sampler-Pack'
+"Bundle 'CSApprox'
+"Bundle 'DirDiff.vim'
+"Bundle 'ervandew/supertab'
+"Bundle 'fugitive.vim'
 " Bundle 'jQuery'
-Bundle 'matchit.zip'
+"Bundle 'matchit.zip'
 " Bundle 'pangloss/vim-javascript'
-Bundle 'ruby-matchit'
-Bundle 'ScrollColors'
-Bundle 'surround.vim'
-Bundle 'Tabular'
-Bundle 'textobj-rubyblock'
-Bundle 'textobj-user'
-Bundle 'tpope/vim-rails.git'
-Bundle 'tpope/vim-eunuch.git'
-Bundle 'vim-coffee-script'
+"Bundle 'ruby-matchit'
+"Bundle 'ScrollColors'
+"Bundle 'surround.vim'
+"Bundle 'Tabular'
+"Bundle 'textobj-rubyblock'
+"Bundle 'textobj-user'
+"Bundle 'tpope/vim-rails.git'
+"Bundle 'tpope/vim-eunuch.git'
+"Bundle 'vim-coffee-script'
 " Bundle 'DrawIt'
 " Bundle 'Markdown'
 " Bundle 'jgdavey/vim-turbux'
 " Bundle 'jgdavey/tslime.vim'
-Bundle 'tpope/vim-endwise'
-Bundle 'tpope/vim-speeddating'
-Bundle 'tpope/vim-commentary'
-Bundle 'tpope/vim-haml'
-Bundle 'Solarized'
-Bundle 'scrooloose/nerdcommenter'
+"Bundle 'tpope/vim-endwise'
+"Bundle 'tpope/vim-speeddating'
+"Bundle 'tpope/vim-commentary'
+"Bundle 'tpope/vim-haml'
+"Bundle 'Solarized'
+"Bundle 'scrooloose/nerdcommenter'
 " Bundle 'nono/vim-handlebars'
-Bundle 'tpope/vim-dispatch'
-Bundle 'tpope/vim-markdown'
-Bundle 'Syntastic'
-Bundle 'fatih/vim-go'
-Bundle 'jiangmiao/auto-pairs'
-Bundle 'guns/vim-clojure-static'
-Bundle 'tpope/vim-fireplace'
-Plugin 'paredit.vim'
-Plugin 'rainbow_parentheses.vim'
-Plugin 'jpalardy/vim-slime'
-let g:slime_target = "tmux"
-
-" Syntastic settings
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-let g:syntastic_auto_jump = 1
-" end Syntastic settings
+"Bundle 'tpope/vim-dispatch'
+"Bundle 'tpope/vim-markdown'
+"Bundle 'Syntastic'
+"Bundle 'fatih/vim-go'
+"Bundle 'guns/vim-clojure-static'
+"Bundle 'tpope/vim-fireplace'
+"Plugin 'paredit.vim'
+"Plugin 'jpalardy/vim-slime'
+"let g:slime_target = "tmux"
 
 filetype plugin indent on
 
-syntax enable
-let g:solarized_termtrans=1
-set bg=dark
-colorscheme solarized
+let mapleader="\<Space>"
 
-"filetype on		    " fast
-"filetype off		    " fast
-"filetype plugin on	    " slow
-"filetype plugin off	    " fast
-"filetype indent on	    " fast
-"filetype indent off	    " fast
-"filetype plugin indent on  " slow
-"filetype plugin indent off " fast
-
-" 'filetype plugin on' is slow when on a jruby project, possibly b/c jruby
-" starts slow as shit.
-
-map QQ :q<CR>
-map WW :wall<CR>
-map NN :next<CR>
-map PP :previous<CR>
-map + <C-A>
-map - <C-X>
-" map ,, :!rm -f spec/cassettes/*<cr>\|:Dispatch bundle exec rspec spec acceptance -t wip<cr>
-cmap w!! w !sudo tee %
-command T tabedit README
-
-inoremap <C-F> <C-X><C-F>
-inoremap <C-L> <C-X><C-L>
-
-nnoremap <CR> :nohlsearch<cr>
-
-set autoindent
-set autoread
-set autowrite
-set backspace=indent,eol,start
-set confirm
-set expandtab
-set history=1000
-set hlsearch
-set ignorecase
-set smartcase
-set incsearch
-set lazyredraw
-set nowrap
-set pastetoggle=<F5>
-set ruler
-set scrolloff=7
+set tabstop=2       " number of visual spaces per TAB
+set softtabstop=2   " number of spaces in tab when editing
+set expandtab       " tabs are spaces
 set shiftwidth=2
-set shortmess=atI
-set showcmd
-set showmatch
-set sidescroll=8
-set softtabstop=2
-set splitright
-set switchbuf=useopen
-set virtualedit=block
-" set number
-" Turn on per-folder .vimrc sourcing
-set exrc
-" Make per-folder .vimrc files safer
-set secure
-set tabpagemax=99
 
-cabbrev h vertical help
-iabbrev DD <C-r>=strftime("%c")<CR> 
-map DD I== <C-r>=strftime("%c")<CR> ==<CR>
-cnoremap %% <C-r>=expand('%:h').'/'<CR>
-map <Leader>e :edit %%
+set nowrap          " don't wrap lines
 
-" The following gives you a quick "git blame" on the hightlighted code
-vmap gl :<C-U>!git blame <C-R>=expand("%:p") <CR> \| sed -n <C-R>=line("'<") <CR>,<C-R>=line("'>") <CR>p <CR>
+set number              " show line numbers
+set showcmd             " show command in bottom bar
+set cursorline          " highlight current line
+" hi MatchParen cterm=none ctermbg=grey ctermfg=black
+" hi CursorLine cterm=NONE ctermbg=darkred ctermfg=white
 
-" `. - Goto last edit.
+set showmatch           " highlight matching [{()}]
 
-" autocmd User Rails Rnavcommand uploader app/uploaders -suffix=_uploader.rb -default=model()
-" autocmd User Rails Rnavcommand steps spec/acceptance/step_definitions -suffix=_steps.rb -default=web
-" autocmd User Rails Rnavcommand blueprint spec/blueprints -suffix=_blueprint.rb -default=model()
-" autocmd User Rails Rnavcommand factory spec/factories -suffix=_factory.rb -default=model()
-" autocmd User Rails Rnavcommand fabricator spec/fabricators -suffix=_fabricator.rb -default=model()
-" autocmd User Rails Rnavcommand feature spec/acceptance -suffix=.feature -default=env
-" autocmd User Rails Rnavcommand acceptance acceptance -suffix=_spec.rb -default=model()
-" autocmd User Rails Rnavcommand support spec/support features/support -default=env
-" autocmd User Rails Rnavcommand report app/reports
-" autocmd User Rails Rnavcommand import app/importers
-" autocmd User Rails Rnavcommand export app/exporters
-let g:rails_projections = {
-      \  "acceptance/*_spec.rb": {
-      \    "command": "acceptance"
-      \  },
-      \  "spec/support/*": {
-      \    "command": "support"
-      \  },
-      \ "spec/features/*.feature": {
-      \  "command": "feature",
-      \  "alternate": "spec/features/step_definitions/%s_steps.rb"
-      \ },
-      \ "spec/features/step_definitions/*_steps.rb": {
-      \  "command": "step",
-      \  "alternate": "spec/features/%s.feature"
-      \ },
-      \ "spec/factories/*.rb": {
-      \  "command": "factory",
-      \  "affinity": "model"
-      \ },
-      \ "app/uploaders/*.rb": {
-      \  "command": "uploader"
-      \ },
-      \ "app/admin/*.rb": {
-      \  "command": "admin",
-      \  "affinity": "model"
-      \ },
-      \ "app/workers/*.rb": {
-      \  "command": "worker"
-      \ },
-      \ "db/structure.sql": {
-      \  "command": "structure",
-      \  "affinity": "database"
-      \ }
-      \}
+set incsearch           " search as characters are entered
+set hlsearch            " highlight matches
 
-autocmd BufEnter *.hbs.* setlocal ft=handlebars
-autocmd FileType gitcommit setlocal spell spelllang=en spellfile=~/.vim/spell/en.utf-8.add
-" autocmd BufWritePost Gemfile !bundle install
+" CtrlP settings
+let g:ctrlp_match_window = 'bottom,order:ttb'
+let g:ctrlp_switch_buffer = 0
+let g:ctrlp_working_path_mode = 0
 
-autocmd FileType go setlocal tabstop=2 softtabstop=2 shiftwidth=2 noexpandtab nolist
+set nobackup " Turn off swap files
+set nowritebackup
+set noswapfile
 
-" autocmd FileType qf cla
-autocmd FileType qf set nowinfixheight
-autocmd BufRead Capfile,Gemfile,Rakefile,Guardfile,Procfile,Vagrantfile,Berksfile set ft=ruby
+set autoread " Autoload files that have changed
 
-autocmd FileType ruby map ,, :Dispatch bundle exec rspec spec<cr>
-autocmd FileType go map ,, :Dispatch go run %<cr>
-autocmd FileType clojure map ,, :Dispatch lein test<cr>
-
-
-"Fix cron on OSX
-"Avoids error 'crontab: temp file must be edited in place'
-autocmd FileType crontab set backupskip=/tmp/*,/private/tmp/*
-
-function! ResCur()
-  if line("'\"") <= line("$")
-    normal! g`"
-    return 1
+function! NumberToggle()
+  if(&relativenumber == 1)
+    set number
+  else
+    set relativenumber
   endif
-endfunction
+endfunc
 
-augroup resCur
-  autocmd!
-  autocmd BufWinEnter * call ResCur()
-augroup END
+nnoremap <Bslash> :call NumberToggle()<cr>
 
-set equalalways
-let mapleader = ','
+set rnu
+au BufEnter * :set rnu
+au BufLeave * :set nu
+au WinEnter * :set rnu
+au WinLeave * :set nu
+au InsertEnter * :set nu
+au InsertLeave * :set rnu
+au FocusLost * :set nu
+au FocusGained * :set rnu
 
-map <Leader>. :Tabularize/
-
-let g:turbux_command_prefix = 'bundle exec'
-
-let @r="require 'pry';binding.pry"
-" re-indent xml
-map <F3> :%s/>\s*</>\r</g<CR>:set ft=xml<CR>gg=G
-" re-indent json
-map <F4> :%s/{/{\r/g<CR>:%s/}/\r}/g<CR>:%s/,/,\r/g<CR>:set ft=javascript<CR>gg=G
-
-" Apply rspec focus tag
-map <Leader>f :s/ \<do\>$/, :focus do/<cr><esc>:noh<cr>
-map <Leader>g ?:focus<cr><esc>:s/, :focus//<cr><esc>:noh<cr>
-
-autocmd! BufReadPost gitcommit
-  \ if line("'\"") > 0 && line("'\"") <= line("$") |
-  \   exe "normal g`\"" |
-  \ endif
-autocmd FileType gitcommit setlocal spell spelllang=en_us
-autocmd FileType gitcommit DiffGitCached | wincmd L
+au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
