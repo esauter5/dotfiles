@@ -1,6 +1,6 @@
 [user]
-  name            = Paul Ostazeski
-  email           = paul.ostazeski@gmail.com
+  name            = Eric Sauter 
+  email           = esauter@lgscout.com
 [color]
   branch          = auto
   status          = auto
@@ -16,9 +16,9 @@
   old             = red bold
   new             = green bold
 [color "status"]
-  added           = yellow
-  changed         = green
-  untracked       = cyan
+  added           = green
+  changed         = yellow
+  untracked       = red
 [core]
   whitespace      = fix,-indent-with-non-tab,trailing-space,cr-at-eol
   excludesfile    = ~/.global_gitignore
@@ -36,8 +36,7 @@
 [push]
   default         = current
 [github]
-  user            = PaulOstazeski
-  token           = 9c35f01e0cef9780a17e5076c0c64861
+  user            = esauter5
 [init]
   templatedir     = ~/.git_template
 [remote "origin"]
