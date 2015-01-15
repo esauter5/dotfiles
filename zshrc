@@ -83,6 +83,8 @@ alias ..='cd ..'
 alias ...='cd ...'
 alias reset_db='rake db:drop; rake db:create; rake db:migrate'
 
+alias nav='cd /build/budvar-system/pkgs/arch/lg-navigator/src/lg-navigator/'
+
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
 [[ -s `brew --prefix`/etc/autojump.sh ]] && . `brew --prefix`/etc/autojump.sh
