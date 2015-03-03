@@ -128,3 +128,6 @@ au Syntax * RainbowParenthesesLoadSquare
 au Syntax * RainbowParenthesesLoadBraces
 
 map <C-n> :NERDTreeToggle<CR>
+
+" autohighlight trailing whitespace
+match ErrorMsg '\s\+$'
