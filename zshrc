@@ -78,6 +78,8 @@ alias ..='cd ..'
 alias ...='cd ...'
 alias reset_db='rake db:drop; rake db:create; rake db:migrate'
 
+alias hg='history | grep'
+
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
 [[ -s `brew --prefix`/etc/autojump.sh ]] && . `brew --prefix`/etc/autojump.sh
