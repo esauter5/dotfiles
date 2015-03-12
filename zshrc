@@ -69,11 +69,6 @@ export PATH="/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin"
 
 alias bx='bundle exec'
 
-alias sv='cd ~/Code/LG/scoutvision'
-alias td='cd ~/Code/LG/telemetry-dao'
-alias ts='cd ~/Code/LG/telemetry-services'
-
-
 alias gs='git status'
 
 alias rs='rails s'
@@ -82,8 +77,6 @@ alias rc='rails console'
 alias ..='cd ..'
 alias ...='cd ...'
 alias reset_db='rake db:drop; rake db:create; rake db:migrate'
-
-alias nav='cd /build/budvar-system/pkgs/arch/lg-navigator/src/lg-navigator/'
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
